@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Добавить STUSDT в MetaMask</title>
+</head>
+<body>
+  <h1>Добавить токен StableTokenUSDT (STUSDT) в MetaMask</h1>
+  <button id="addToken">Добавить STUSDT</button>
+
+  <script>
+    document.getElementById("addToken").onclick = async () => {
+      const tokenAddress = "0xc1D553d3eE6C87Bd4FAAcE96e3bAF5AF7492B16E"; // Адрес вашего токена
+      const tokenSymbol = "STUSDT"; // Символ токена
+      const tokenDecimals = 18; // Десятичные знаки токена
+      const tokenImage = "https://bafybeicdd4lwxyvtdaidxbp6s3wrconodcie6nxufhbv27xu7e4poxtbem.ipfs.w3s.link"; // URL логотипа токена
+
+      try {
+        const wasAdded = await window.ethereum.request({
+          method: "wallet_watchAsset",
+          params: {
+            type: "ERC20",
+            options: {
+              address: tokenAddress, // Адрес контракта токена
+              symbol: tokenSymbol,  // Символ токена
+              decimals: tokenDecimals, // Десятичные знаки
+              image: tokenImage, // URL логотипа
+            },
+          },
+        });
+
+        if (wasAdded) {
+          alert("Токен STUSDT успешно добавлен в MetaMask!");
+        } else {
+          alert("Добавление токена отменено.");
+        }
+      } catch (error) {
+        console.error("Ошибка при добавлении токена:", error);
+        alert("Ошибка: " + error.message);
+      }
+    };
+  </script>
+</body>
+</html>
